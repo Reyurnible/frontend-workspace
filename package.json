@@ -1,0 +1,23 @@
+{
+  "name": "frontend-workspace",
+  "version": "1.0.0",
+  "description": "フロントエンドの環境構築セット",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Reyurnible/frontend-workspace.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Reyurnible/frontend-workspace/issues"
+  },
+  "homepage": "https://github.com/Reyurnible/frontend-workspace#readme",
+  "devDependencies": {
+    "webpack": "^2.6.1"
+  }
+}
