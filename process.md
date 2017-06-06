@@ -104,3 +104,47 @@ $ npm install --save-dev webpack
 ```
 
 最低限のビルドができるところまでを用意する
+
+es6/es2015のトランスパイル
+
+```
+Babelのインストール
+$ npm install babel-loader babel-core babel-preset-es2015 --save-dev
+```
+
+`webpack.config.js`を作成する
+
+```webpack.config.js
+module.exports = {
+  context: __dirname + '/src',
+
+  entry: {
+    js: "./js/app.js"
+  },
+
+  output: {
+    path: __dirname + '/dist',
+    filename: "./js/app.js"
+  },
+
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015']
+        }
+      }
+    ]
+  }
+}
+```
+
+context:ビルドの対象となるディレクトリを定義します
+entry:ビルドの起点となるファイルのパスを記述します
+output:output.pathに出力先、output.filenameに出力ファイルのファイル名を記述します
+
+
+参考サイト：http://qiita.com/tatsuyankmura/items/539c56837fc3a5f258b5
