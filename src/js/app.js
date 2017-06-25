@@ -1,9 +1,10 @@
 /*
 /* es2015
 **/
-class App {
-  constructor(msg) {
-    document.write(msg);
-  }
-}
-let app = new App('Hello World');
+import React from 'react';
+import ReactDOM from 'react-dom'
+
+ReactDOM.reander(
+  <div>Hellow World</div>,
+  document.getElementById('app')
+);

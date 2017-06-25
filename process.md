@@ -6,6 +6,10 @@
 1. プロジェクトの作成と、初期設定
 1. ビルドツールのセットアップ
   1. webpack
+  1. Babelのトランスパイル設定
+  1. reactの設定
+1. 開発用サーバーの設定
+1. CSSビルド環境の設定
 1. タスクランナーのセットアップ
 
 ## Node.js
@@ -94,7 +98,7 @@ npmでパッケージをインストールする
 $ npm install --global typescript
 ```
 
-## ビルドツールのインストール
+## ビルドツールのセットアップ
 
 Webpackをインストールする
 
@@ -133,9 +137,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-        query: {
-          presets: ['es2015']
-        }
       }
     ]
   }
@@ -146,5 +147,91 @@ context:ビルドの対象となるディレクトリを定義します
 entry:ビルドの起点となるファイルのパスを記述します
 output:output.pathに出力先、output.filenameに出力ファイルのファイル名を記述します
 
+また、babelの設定ファイルである`.babelrc`を作成します
+
+```.babelrc
+{
+  "presets": ["es2015"]
+}
+```
+
+コンパイルができるかチェックします
+
+```
+コンパイル
+$ webpack
+このままだと、webpackコマンド使えないので、グローバルでwebpackコマンドを入れる
+$ npm install -g webpack
+```
 
 参考サイト：http://qiita.com/tatsuyankmura/items/539c56837fc3a5f258b5
+
+## reactのインストール
+
+```
+# npmコマンドを使用してreactを入れる
+npm install --save react react-dom
+# babelのreact presetを入れる
+npm install --save-dev babel-preset-react
+```
+
+babelの設定ファイルである`.babelrc`にreactのコンパイル設定を追加します
+
+```.babelrc
+{
+  "presets": ["es2015", "react"]
+}
+```
+
+app.jsを以下のように書き換える
+
+```
+import React from 'react';
+import ReactDOM from 'react-dom'
+
+ReactDOM.reander(
+  <div>Hellow World</div>,
+  document.getElementById('app')
+);
+```
+
+また、src/index.htmlに以下のhtmlファイルを追加します。
+
+```src/index.html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Frontend Sample</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="../dist/js/app.js"></script>
+  </body>
+</html>
+```
+
+## 開発用サーバの設定
+
+出力結果のJavascriptをブラウザで確認するための開発用サーバー立ち上げを行う。
+ビルド結果をブラウザで即次実行する環境を用意するために、[webpack-dev-server](https://webpack.github.io/docs/webpack-dev-server.html)を使用します。
+
+```
+# webpack-dev-serverのインストール
+$ npm install --save-dev webpack-dev-server
+```
+
+webpack.config.jsファイルに以下を追加する
+
+```webpack.config.js  
+devServer: {
+  contentBase: './public',
+  port: 8080,
+  inline: true,
+  historyApiFallback: true
+},
+```
+
+
+
+## CSSビルド環境の設定
