@@ -36,7 +36,7 @@
 
 ## 手順について
 
-``./process.md`を参照
+[process.md](https://github.com/Reyurnible/frontend-workspace/blob/master/process.md)を参照
 
 ## 参考サイト
 
