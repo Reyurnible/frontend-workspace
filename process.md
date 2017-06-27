@@ -64,7 +64,7 @@ $ npm init -y
   "name": "frontend-workspace",
   "version": "1.0.0",
   "description": "フロントエンドの環境構築セット",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -119,18 +119,18 @@ $ npm install babel-loader babel-core babel-preset-es2015 --save-dev
 `webpack.config.js`を作成する
 
 ```webpack.config.js
-module.exports = {
+'use strict';
+
+var webpack = require('webpack');
+
+var config = {
   context: __dirname + '/src',
-
-  entry: {
-    js: "./js/app.js"
-  },
-
+  entry: "./app.js",
   output: {
     path: __dirname + '/dist',
-    filename: "./js/app.js"
+    filename: 'bundle.js',
+    publicPath: '/assets',
   },
-
   module: {
     loaders: [
       {
@@ -139,8 +139,11 @@ module.exports = {
         loader: 'babel-loader',
       }
     ]
-  }
-}
+  },
+  devtool: 'source-map',
+};
+
+module.exports = config;
 ```
 
 context:ビルドの対象となるディレクトリを定義します
@@ -158,10 +161,8 @@ output:output.pathに出力先、output.filenameに出力ファイルのファ�
 コンパイルができるかチェックします
 
 ```
-コンパイル
-$ webpack
-このままだと、webpackコマンド使えないので、グローバルでwebpackコマンドを入れる
-$ npm install -g webpack
+# コンパイル
+$ ./node_modules/.bin/webpack
 ```
 
 参考サイト：http://qiita.com/tatsuyankmura/items/539c56837fc3a5f258b5
@@ -189,7 +190,7 @@ app.jsを以下のように書き換える
 import React from 'react';
 import ReactDOM from 'react-dom'
 
-ReactDOM.reander(
+ReactDOM.render(
   <div>Hellow World</div>,
   document.getElementById('app')
 );
@@ -206,7 +207,7 @@ ReactDOM.reander(
   </head>
   <body>
     <div id="app"></div>
-    <script src="../dist/js/app.js"></script>
+    <script src="/assets/app.js"></script>
   </body>
 </html>
 ```
@@ -223,15 +224,37 @@ $ npm install --save-dev webpack-dev-server
 
 webpack.config.jsファイルに以下を追加する
 
-```webpack.config.js  
-devServer: {
-  contentBase: './public',
-  port: 8080,
-  inline: true,
-  historyApiFallback: true
-},
+```webpack.config.js
+var config = {
+  // 省略
+  devServer: {
+    contentBase: __dirname + '/src',
+    port: 3000,
+  },
+  // 省略
+};
+module.exports = config;
 ```
 
+### サーバーを起動する
+
+```
+# webpack-dev-serverコマンドを使用して起動を行う
+$ ./node_modules/.bin/webpack-dev-server --inline --hot --open
+```
+
+package.jsonのscriptsに、以下のようにコマンドを追加しておくと便利なので追加しておく。
+これで、次回から`npm start`でサーバー起動が可能になる。
+
+```package.json
+// 省略
+scripts: [
+  "start": "webpack-dev-server --inline --hot --open",
+]
+// 省略
+```
+
+参考リンク：http://dackdive.hateblo.jp/entry/2016/05/07/183335
 
 
 ## CSSビルド環境の設定

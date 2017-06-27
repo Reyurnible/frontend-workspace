@@ -44,3 +44,4 @@
 - http://qiita.com/Lyude/items/783a972bace33002455c
 - http://qiita.com/Lyude/items/c4250b6be4eeece90348
 - http://qiita.com/Lyude/items/7b8104418a5dd03c7d30
+- http://dackdive.hateblo.jp/entry/2016/05/07/183335
