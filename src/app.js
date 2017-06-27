@@ -2,9 +2,9 @@
 /* es2015
 **/
 import React from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 
-ReactDOM.reander(
+ReactDOM.render(
   <div>Hellow World</div>,
   document.getElementById('app')
 );

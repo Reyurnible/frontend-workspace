@@ -2,8 +2,12 @@
   "name": "frontend-workspace",
   "version": "1.0.0",
   "description": "フロントエンドの環境構築セット",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "build": "webpack --progress --colors",
+    "build:prod": "NODE_ENV=production npm run build",
+    "start": "webpack-dev-server --inline --hot",
+    "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

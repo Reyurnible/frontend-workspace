@@ -1,10 +1,14 @@
-module.exports = {
-  entry: {
-    js: "./src/js/app.js"
-  },
+'use strict';
+
+var webpack = require('webpack');
+
+var config = {
+  context: __dirname + '/src',
+  entry: './app.js',
   output: {
-    path: __dirname + '/dist',
-    filename: "./js/app.js"
+    path: __dirname + '/dist', // dist in the destination
+    filename: 'bundle.js',
+    publicPath: '/assets',
   },
   module: {
     loaders: [
@@ -12,14 +16,14 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-      }
+      },
     ],
   },
   devtool: 'source-map',
   devServer: {
-    contentBase: './src',
-    port: 8080,
-    inline: true,
-    historyApiFallback: true
+    contentBase: __dirname + '/src',
+    port: 3000,
   },
-}
+};
+
+module.exports = config;

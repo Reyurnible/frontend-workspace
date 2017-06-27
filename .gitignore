@@ -1,6 +1,7 @@
 # Mac
 .DS_Store
 # NodeJS
-/node_modules
+node_modules
 # Build Files
-/dist
+dist/*
+!dist/index.html
