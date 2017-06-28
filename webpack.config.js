@@ -1,21 +1,33 @@
 'use strict';
 
-var webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var config = {
+module.exports = {
   context: __dirname + '/src',
-  entry: './app.js',
+  entry: [
+    './app.js',
+    './app.css'
+  ],
   output: {
     path: __dirname + '/dist', // dist in the destination
     filename: 'bundle.js',
     publicPath: '/assets',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+      },
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          use: [
+            'css-loader',
+            'postcss-loader',
+          ]
+        })
       },
     ],
   },
@@ -24,6 +36,9 @@ var config = {
     contentBase: __dirname + '/',
     port: 3000,
   },
+  plugins: [
+    new ExtractTextPlugin({
+      filename: 'bundle.css'
+    }),
+  ],
 };
-
-module.exports = config;

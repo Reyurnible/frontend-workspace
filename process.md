@@ -258,3 +258,13 @@ scripts: [
 
 
 ## CSSビルド環境の設定
+
+PostCSSを使用します。
+そのための、cssのloaderをインストールします。
+
+```
+$ npm install --save-dev css-loader postcss-loader postcss-easy-import extract-text-webpack-plugin
+```
+
+
+http://qiita.com/namazu510/items/beb930472a4b76c2fd64
