@@ -121,18 +121,16 @@ $ npm install babel-loader babel-core babel-preset-es2015 --save-dev
 ```webpack.config.js
 'use strict';
 
-var webpack = require('webpack');
-
-var config = {
+module.exports = {
   context: __dirname + '/src',
-  entry: "./app.js",
+  entry: ["./app.js"],
   output: {
     path: __dirname + '/dist',
     filename: 'bundle.js',
     publicPath: '/assets',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -142,8 +140,6 @@ var config = {
   },
   devtool: 'source-map',
 };
-
-module.exports = config;
 ```
 
 context:ビルドの対象となるディレクトリを定義します
@@ -225,7 +221,7 @@ $ npm install --save-dev webpack-dev-server
 webpack.config.jsファイルに以下を追加する
 
 ```webpack.config.js
-var config = {
+module.exports = {
   // 省略
   devServer: {
     contentBase: __dirname + '/',
@@ -233,7 +229,6 @@ var config = {
   },
   // 省略
 };
-module.exports = config;
 ```
 
 ### サーバーを起動する
@@ -266,5 +261,56 @@ PostCSSを使用します。
 $ npm install --save-dev css-loader postcss-loader postcss-easy-import extract-text-webpack-plugin
 ```
 
+webpack.config.jsにpostcssのロード設定を追加する
 
-http://qiita.com/namazu510/items/beb930472a4b76c2fd64
+```webpack.config.js
+'use strict';
+// 追加
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+module.exports = {
+  context: __dirname + '/src',
+  entry: [
+    './app.js',
+    './app.css' // 追加
+  ],
+  // 省略
+  module: {
+    rules: [
+      // 省略
+      // CSSのロード設定を追加
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          use: [
+            'css-loader',
+            'postcss-loader',
+          ]
+        })
+      },
+    ],
+  },
+  // 省略
+  plugins: [
+    new ExtractTextPlugin({
+      filename: 'bundle.css'
+    }),
+  ],
+};
+```
+
+また、PostCSSのconfigをpostcss.config.jsに追加する
+
+```postcss.config.js
+module.exports = {
+  plugins: [
+    require('postcss-easy-import')({
+      glob: true
+    })
+  ]
+}
+```
+
+これで、再度ビルドできるかを確認する
+
+参考サイト：http://qiita.com/namazu510/items/beb930472a4b76c2fd64
