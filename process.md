@@ -196,7 +196,7 @@ ReactDOM.render(
 );
 ```
 
-また、src/index.htmlに以下のhtmlファイルを追加します。
+また、プロジェクトの直下に、index.htmlファイルを追加します。
 
 ```src/index.html
 <!DOCTYPE html>
@@ -228,7 +228,7 @@ webpack.config.jsファイルに以下を追加する
 var config = {
   // 省略
   devServer: {
-    contentBase: __dirname + '/src',
+    contentBase: __dirname + '/',
     port: 3000,
   },
   // 省略

@@ -21,7 +21,7 @@ var config = {
   },
   devtool: 'source-map',
   devServer: {
-    contentBase: __dirname + '/src',
+    contentBase: __dirname + '/',
     port: 3000,
   },
 };
